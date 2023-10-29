@@ -12,7 +12,7 @@ export const NavBar = () => {
         <SearchInput />
         <div className="flex items-center">
           <a href="" className="mr-6">
-            Loginnnnnn alfredo
+            Loginnnnnn alfredo dsfdgdgdfgdfgdfg
           </a>
         </div>
       </div>
