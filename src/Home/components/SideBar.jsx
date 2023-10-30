@@ -12,16 +12,16 @@ import {
 export default function SideBar() {
   const [open, setOpen] = useState(true);
   return (
-    <div className="fixed  left-0 h-full flex">
+    <div className="  left-0 h-full flex">
       <div
         className={` ${
           open ? "w-42" : "w-20 "
-        } bg-dark-purple h-screen p-5  pt-8 relative duration-300 bg-opacity-90 bg-blur-2xl bg-gray-900`}
+        }  h-screen p-5  pt-8 relative duration-300 bg-opacity-90 bg-blur-2xl bg-gray-900`}
       >
         <FontAwesomeIcon
           icon={open ? faX : faBars}
-          className={`absolute cursor-pointer  top-9 w-7 border-dark-purple
-            border-2 rounded-full  ${!open && "rotate-180"}`}
+          className={`absolute cursor-pointer  w-7  text-gray-300 
+            border-2  rounded-full  `}
           onClick={() => setOpen(!open)}
         />
 
