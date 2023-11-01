@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthLayout } from "./Layout/AuthLayout";
+import { Link } from "react-router-dom";
 
 export const RegisterPage = () => {
   return (
@@ -56,12 +57,12 @@ export const RegisterPage = () => {
               >
                 Register
               </button>
-              <a
+              <Link
                 className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800"
-                href="#"
+                to="/auth/login"
               >
                 Already have an account?
-              </a>
+              </Link>
             </div>
           </form>
         </div>

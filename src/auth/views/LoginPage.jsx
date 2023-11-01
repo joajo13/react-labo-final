@@ -1,7 +1,13 @@
 import React from "react";
 import { AuthLayout } from "./Layout/AuthLayout";
+import { BiLogoGoogle } from "react-icons/bi";
+import { Link, Navigate } from "react-router-dom";
 
 export const LoginPage = () => {
+  const onclick = () => {
+    Navigate("/auth/register");
+  };
+
   return (
     <div>
       <AuthLayout title={"Login"}>
@@ -37,18 +43,25 @@ export const LoginPage = () => {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-orange-600 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
               >
                 Sign In
               </button>
-              <a
-                className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800"
-                href="#"
+              <button
+                className="flex items-center bg-orange-600 hover:bg-orange-800 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
               >
-                Create account?
-              </a>
+                <BiLogoGoogle className="mr-2" />
+                Google
+              </button>
             </div>
+            <Link
+              className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800"
+              to="/auth/register"
+            >
+              Create account?
+            </Link>
           </form>
         </div>
       </AuthLayout>
