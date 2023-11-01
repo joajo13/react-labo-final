@@ -2,9 +2,9 @@ import React from "react";
 
 export const SearchInput = () => {
   return (
-    <div className="relative text-gray-600">
+    <div className="text-gray-600">
       <input
-        className="border-2 border-gray-300 rounded-full p-1 mx-6 w-96"
+        className="border-2 border-gray-300 rounded-full p-1 w-auto md:w-96"
         type="search"
         name="search"
         placeholder="Search"

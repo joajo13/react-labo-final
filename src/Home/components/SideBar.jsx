@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 
 import {
   mainMenus,
@@ -9,83 +7,55 @@ import {
   moreMenus,
 } from "../Hooks/SideBar";
 
-export default function SideBar() {
-  const [open, setOpen] = useState(true);
-  return (
-    <div className="  left-0 h-screen  flex">
-      <div
-        className={` ${
-          open ? "w-42" : "w-20 "
-        }   p-5  pt-8 relative duration-300 bg-opacity-90 bg-blur-2xl bg-gray-900`}
-      >
-        <FontAwesomeIcon
-          icon={open ? faX : faBars}
-          className={`absolute cursor-pointer  w-7  text-gray-300 
-            border-2  rounded-full  `}
-          onClick={() => setOpen(!open)}
-        />
+export default function SideBar({ isOpen }) {
+  const hiddenClass = isOpen ? "hidden" : "";
 
-        <ul className="pt-6 ">
+  return (
+    <div
+      className={`${hiddenClass} absolute left-0 w-1/2 lg:block max-h-sidebar h-sidebar lg:w-min border-r bg-white`}
+    >
+      <div className="w-sidebar p-5 relative duration-300 bg-opacity-90 bg-blur-2xl">
+        <ul>
           {mainMenus.map((Menu, index) => (
             <li
               key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                index === 0 && "bg-light-white"
-              } `}
+              className="flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-sm items-center gap-x-4 bg-light-white"
             >
               <FontAwesomeIcon icon={Menu.icon} />
-              <span className={`${!open && "hidden"} origin-left duration-200`}>
-                {Menu.text}
-              </span>
+              <span className="origin-left duration-200">{Menu.text}</span>
             </li>
           ))}
         </ul>
-        <ul className="pt-6">
+        <ul className="pt-2">
           {usersMenu.map((Menu, index) => (
             <li
               key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                index === 0 && "bg-light-white"
-              } `}
+              className="flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-sm items-center gap-x-4 mt-2 bg-light-white"
             >
               <FontAwesomeIcon icon={Menu.icon} />
-              <span className={`${!open && "hidden"} origin-left duration-200`}>
-                {Menu.text}
-              </span>
+              <span className="origin-left duration-200">{Menu.text}</span>
             </li>
           ))}
         </ul>
-        <ul className="pt-6">
+        <ul className="pt-2">
           {comunidadesMenu.map((Menu, index) => (
             <li
               key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                index === 0 && "bg-light-white"
-              } `}
+              className="flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-sm items-center gap-x-4 mt-2 bg-light-white"
             >
               <FontAwesomeIcon icon={Menu.icon} />
-              <span className={`${!open && "hidden"} origin-left duration-200`}>
-                {Menu.text}
-              </span>
+              <span className="origin-left duration-200">{Menu.text}</span>
             </li>
           ))}
         </ul>
-        <ul className="pt-6">
+        <ul className="pt-2">
           {moreMenus.map((Menu, index) => (
             <li
               key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                index === 0 && "bg-light-white"
-              } `}
+              className="flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-sm items-center gap-x-4 mt-2 bg-light-white"
             >
               <FontAwesomeIcon icon={Menu.icon} />
-              <span className={`${!open && "hidden"} origin-left duration-200`}>
-                {Menu.text}
-              </span>
+              <span className="origin-left duration-200">{Menu.text}</span>
             </li>
           ))}
         </ul>
