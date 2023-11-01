@@ -12,11 +12,11 @@ import {
 export default function SideBar() {
   const [open, setOpen] = useState(true);
   return (
-    <div className="  left-0 h-full flex">
+    <div className="  left-0 h-screen  flex">
       <div
         className={` ${
           open ? "w-42" : "w-20 "
-        }  h-screen p-5  pt-8 relative duration-300 bg-opacity-90 bg-blur-2xl bg-gray-900`}
+        }   p-5  pt-8 relative duration-300 bg-opacity-90 bg-blur-2xl bg-gray-900`}
       >
         <FontAwesomeIcon
           icon={open ? faX : faBars}
