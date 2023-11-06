@@ -13,9 +13,11 @@ export const HomeLayout = ({ children }) => {
   return (
     <div className="">
       <NavBar toggleMenu={toggleMenu} />
-      <SideBar isOpen={isOpen} />
-      <RightPanel />
-      <div className="mx-2 lg:ml-lmain lg:mr-lmain">{children}</div>
+      <div className="flex justify-between h-screen overflow-auto">
+        <SideBar isOpen={isOpen} />
+        <div className="mx-2">{children}</div>
+        <RightPanel />
+      </div>
     </div>
   );
 };

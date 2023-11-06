@@ -4,7 +4,7 @@ export const SearchInput = () => {
   return (
     <div className="text-gray-600">
       <input
-        className="border-2 border-gray-300 rounded-full p-1 w-auto md:w-96"
+        className="border-2 w-[250px] border-gray-300 rounded-full p-1 lg:w-96"
         type="search"
         name="search"
         placeholder="Search"

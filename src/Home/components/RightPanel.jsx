@@ -2,10 +2,12 @@ import React from "react";
 
 export const RightPanel = () => {
   return (
-    <div className="absolute end-0 w-sidebar  h-sidebar hidden lg:block">
-      <div className="m-4 border rounded-lg h-80 bg-white p-4">
-        <h1>User info</h1>
+    <aside className="w-sidebar h-sidebar sticky top-0">
+      <div className="hidden lg:block mt-3 mr-3">
+        <div className="border rounded-lg h-80 bg-white p-4">
+          <h1>User info</h1>
+        </div>
       </div>
-    </div>
+    </aside>
   );
 };

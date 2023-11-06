@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { HomeLayout } from "./layout/HomeLayout";
+import { CreatePost } from "../components/CreatePost";
+import { getPosts } from "../../services/posts";
+import { useQuery } from "react-query";
+import { Post } from "../components/Post";
 
 export const HomePage = () => {
+  const {
+    data: posts,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => getPosts(),
+  });
+
   return (
     <HomeLayout>
-      <div>
-        <div className="border p-3 mt-3 rounded-md flex bg-white">
-          <img
-            className="h-14 w-14 rounded-2xl mr-2"
-            src="https://i.imgur.com/9LcmFac.jpeg"
-            alt="profile"
+      <main className="w-[90vw] lg:w-[60vw]">
+        <CreatePost />
+        {posts?.map((p, i) => (
+          <Post
+            key={i}
+            postContent={p.mainContent}
+            postOwner={p.userId}
+            postedAt={p.createdAt}
+            title={p.title}
+            postId={p.postId}
           />
-          <button className="border text-gray-400 hover:border-blue-600 rounded-md w-full text-left pl-2 hover:cursor-text">
-            Create post...
-          </button>
-        </div>
-      </div>
+        ))}
+      </main>
     </HomeLayout>
   );
 };
