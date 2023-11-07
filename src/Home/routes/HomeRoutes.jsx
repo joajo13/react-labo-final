@@ -6,9 +6,9 @@ import { UserPage } from "../../User/views/UserPage";
 export const HomeRoutes = () => {
   return (
     <Routes>
-      <Route path="home" element={<HomePage />} />
-      <Route path="user" element={<UserPage />} />
-      <Route path="*" element={<Navigate to={"/home"} />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/user" element={<UserPage />} />
+      <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-import { AUTH } from "@/constants";
+import { AUTH } from "../constants.js";
 import React, { useReducer } from "react";
 
 const tokenStorage = localStorage.getItem("token");

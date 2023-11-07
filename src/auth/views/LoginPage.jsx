@@ -1,12 +1,65 @@
-import React from "react";
+import { useContext, useState } from "react";
 import { AuthLayout } from "./Layout/AuthLayout";
+import { AuthContext } from "../../context/AuthContext";
+import { useMutation } from "react-query";
+import { toast } from "sonner";
+import { checkIfIsEmailOrUsername } from "../../utils/checkEmailOrUsername";
+import { login } from "../../services/auth";
+import { Loader } from "../components/Loader";
+import { validateForm } from "../../utils/validation";
 
 export const LoginPage = () => {
+  const { handleLogin } = useContext(AuthContext);
+
+  const [errors, setErrors] = useState({
+    usernameOrEmail: "",
+    password: "",
+  });
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { username, password } = formData;
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: (credentials) => login(credentials),
+    onSuccess: (data) => {
+      handleLogin(data);
+      toast.success("Login successful");
+    },
+    onError: () => {
+      toast.error("Login failed");
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors({
+      username: "",
+      password: "",
+    });
+    const field = checkIfIsEmailOrUsername(username);
+    const credentials = {
+      [field]: username,
+      password,
+    };
+
+    setErrors(validateForm(credentials));
+    mutate(credentials);
+  };
+
   return (
     <div>
       <AuthLayout title={"Login"}>
+        {isPending && <Loader />}
         <div className="h-full">
-          <form className="bg-white rounded px-8 pt-6 pb-8 mb-4">
+          <form
+            className="bg-white rounded px-8 pt-6 pb-8 mb-4"
+            onSubmit={handleSubmit}
+          >
             <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
@@ -19,7 +72,14 @@ export const LoginPage = () => {
                 id="username"
                 type="text"
                 placeholder="Username"
+                value={username}
+                onChange={(e) =>
+                  setFormData({ ...formData, username: e.target.value })
+                }
               />
+              <span className="text-sm text-red-600 font-thin">
+                {errors.username || null}
+              </span>
             </div>
             <div className="mb-6">
               <label
@@ -33,12 +93,19 @@ export const LoginPage = () => {
                 id="password"
                 type="password"
                 placeholder="**********"
+                value={password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
+              <span className="text-sm text-red-600 font-thin">
+                {errors.password || null}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <button
                 className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
+                type="submit"
               >
                 Sign In
               </button>
