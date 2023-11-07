@@ -4,8 +4,7 @@ import { RightPanel } from "../../components/RightPanel";
 import SideBar from "../../components/SideBar";
 
 export const HomeLayout = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(true);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -13,9 +12,11 @@ export const HomeLayout = ({ children }) => {
   return (
     <div className="">
       <NavBar toggleMenu={toggleMenu} />
-      <div className="flex justify-between h-screen overflow-auto">
+      <div className="flex justify-between">
         <SideBar isOpen={isOpen} />
-        <div className="mx-2">{children}</div>
+
+        <div className="mx-2 w-full flex justify-center">{children}</div>
+
         <RightPanel />
       </div>
     </div>

@@ -5,8 +5,12 @@ import { RiNotification3Line } from "react-icons/ri";
 import { BiMessageSquareDots } from "react-icons/bi";
 import { IoMdOpen } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 export const NavBar = ({ toggleMenu }) => {
+  const { handleLogout } = useContext(AuthContext);
+
   return (
     <nav className="sticky top-0 bg-white">
       <div className="z-10 flex items-center py-2 justify-between h-navbar w-screen">
@@ -22,7 +26,10 @@ export const NavBar = ({ toggleMenu }) => {
           <SearchInput />
         </div>
         <div className="hidden lg:flex items-center space-x-2 mr-2">
-          <button>
+          <button
+            className="rounded bg-orange-500 hover:bg-orange-700 p-2"
+            onClick={handleLogout}
+          >
             <IoMdOpen size={24} />
           </button>
           <button>
