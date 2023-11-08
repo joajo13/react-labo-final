@@ -8,6 +8,16 @@ export const getPosts = async () => {
   return checkResponse(response);
 };
 
+export const deletePost = async (id) => {
+  const response = await fetch(`${baseUrl}/posts/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: authorizationHeader,
+    },
+  });
+
+  return checkResponse(response);
+};
 // export const getPostsByUserId = async (id) => {
 //   const response = await fetch(`${baseUrl}/posts/${id}`, {
 //     headers: {

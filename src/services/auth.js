@@ -21,5 +21,6 @@ export const register = async (data) => {
     },
     body: JSON.stringify(data),
   });
+  console.log(data);
   return checkResponse(response);
 };

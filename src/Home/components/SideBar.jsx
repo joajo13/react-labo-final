@@ -11,9 +11,9 @@ export default function SideBar({ isOpen }) {
   const hiddenClass = isOpen ? "hidden" : "";
 
   return (
-    <aside className="w-sidebar absolute lg:sticky lg:top-0 left-0 min-h-screen">
+    <aside className="w-sidebar absolute lg:fixed min-h-screen">
       <div
-        className={`${hiddenClass} w-[50vw] lg:block max-h-sidebar h-sidebar lg:w-min border-r bg-white`}
+        className={`${hiddenClass} w-[15vw] lg:block max-h-sidebar h-sidebar lg:w-min border-r bg-white`}
       >
         <div className="p-5 relative duration-300 bg-opacity-90 bg-blur-2xl">
           <ul>

@@ -4,6 +4,17 @@
 html {
   background-color: #DAE0E6;
 }
-body{
-  overflow: hidden;
-}
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #ff6600;
+    border-radius: 16px;
+    border: 0px none #ffffff;
+  }

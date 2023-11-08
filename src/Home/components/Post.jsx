@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { PiShareFatDuotone } from "react-icons/pi";
@@ -6,15 +6,14 @@ import { useQuery } from "react-query";
 import { getComments } from "../../helpers/comments";
 import { Comment } from "./Comment";
 import { MdFullscreenExit } from "react-icons/md";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Post = ({ postContent, postOwner, postedAt, title, postId }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { state } = useContext(AuthContext);
+  const { user } = state;
 
-  const {
-    data: comments,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: comments } = useQuery({
     queryKey: ["comments", postId],
     queryFn: () => getComments(postId),
   });
@@ -23,6 +22,8 @@ export const Post = ({ postContent, postOwner, postedAt, title, postId }) => {
     e.preventDefault();
     setIsOpen(!isOpen);
   };
+
+  const deletePost = () => {};
 
   return (
     <div>

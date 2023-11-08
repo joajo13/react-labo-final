@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { checkIfIsEmailOrUsername } from "../../utils/checkEmailOrUsername";
 import { login } from "../../services/auth";
 import { Loader } from "../components/Loader";
-import { validateForm } from "../../utils/validation";
+import { validateLoginForm } from "../../utils/validation";
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const { handleLogin } = useContext(AuthContext);
@@ -47,7 +48,7 @@ export const LoginPage = () => {
       password,
     };
 
-    setErrors(validateForm(credentials));
+    setErrors(validateLoginForm(credentials));
     mutate(credentials);
   };
 
@@ -55,7 +56,7 @@ export const LoginPage = () => {
     <div>
       <AuthLayout title={"Login"}>
         {isPending && <Loader />}
-        <div className="h-full">
+        <div className="max-w-md mx-auto lg:h-full">
           <form
             className="bg-white rounded px-8 pt-6 pb-8 mb-4"
             onSubmit={handleSubmit}
@@ -71,7 +72,7 @@ export const LoginPage = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="username"
                 type="text"
-                placeholder="Username"
+                placeholder="Username or email"
                 value={username}
                 onChange={(e) =>
                   setFormData({ ...formData, username: e.target.value })
@@ -109,12 +110,12 @@ export const LoginPage = () => {
               >
                 Sign In
               </button>
-              <a
+              <Link
                 className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800"
-                href="#"
+                to={"/auth/register"}
               >
                 Create account?
-              </a>
+              </Link>
             </div>
           </form>
         </div>
