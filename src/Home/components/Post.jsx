@@ -13,11 +13,6 @@ export const Post = ({ postContent, postOwner, postedAt, title, postId }) => {
   const { state } = useContext(AuthContext);
   const { user } = state;
 
-  const { data: comments } = useQuery({
-    queryKey: ["comments", postId],
-    queryFn: () => getComments(postId),
-  });
-
   const toggleMenu = (e) => {
     e.preventDefault();
     setIsOpen(!isOpen);
@@ -68,7 +63,7 @@ export const Post = ({ postContent, postOwner, postedAt, title, postId }) => {
           postOwner={postOwner}
           postedAt={postedAt}
           title={title}
-          comments={comments || []}
+          // comments={comments || []}
           postId={postId}
           toggleMenu={toggleMenu}
         />
@@ -82,13 +77,16 @@ export const PostModal = ({
   postOwner,
   postedAt,
   title,
-  comments,
   postId,
   toggleMenu,
 }) => {
+  const { data: comments } = useQuery({
+    queryKey: ["comments", postId],
+    queryFn: () => getComments(postId),
+  });
   return (
     <div className="fixed inset-0 flex items-center justify-center backdrop-brightness-50 z-50">
-      <div className="bg-white rounded-xl h-[40vw] w-[40vw] shadow-2xl p-6 overflow-auto ">
+      <div className="bg-white rounded-xl h-[40vw] w-[40vw] shadow-2xl p-6 overflow-auto relative">
         <div className="flex space-x-3 items-center text-sm text-gray-500 ">
           <img
             src="https://i.imgur.com/9LcmFac.jpeg"
@@ -104,10 +102,7 @@ export const PostModal = ({
             {postedAt}
           </a>
         </div>
-        <button
-          className="absolute top-[200px] right-[350px]"
-          onClick={toggleMenu}
-        >
+        <button className="absolute top-0 right-0 m-2" onClick={toggleMenu}>
           <MdFullscreenExit size={26} color="orange" />
         </button>
         <h1 className="text-lg font-semibold">{title}</h1>
@@ -119,10 +114,10 @@ export const PostModal = ({
             comments.map((c) =>
               c.postId === postId ? (
                 <Comment
-                  key={c.id}
-                  commentOwner={c.name}
-                  postedAt={c.email}
-                  commentContent={c.body}
+                  key={c.commentId}
+                  commentOwner={c.userId}
+                  postedAt={c.createdAt}
+                  commentContent={c.mainContent}
                 />
               ) : null
             )}
