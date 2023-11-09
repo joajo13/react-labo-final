@@ -49,6 +49,7 @@ function AuthProvider({ children }) {
     dispatch({ type: AUTH.LOGOUT });
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("userInfo");
   };
 
   return (

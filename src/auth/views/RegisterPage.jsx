@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AuthLayout } from "./Layout/AuthLayout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateRegisterForm } from "../../utils/validation";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "sonner";
@@ -20,6 +20,8 @@ const initialState = {
 export const RegisterPage = () => {
   const [errors, setErrors] = useState(initialState);
 
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
@@ -28,6 +30,7 @@ export const RegisterPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success("User created");
+      navigate("/auth/login");
     },
     onError: () => {
       toast.error("Error creating user");
@@ -61,7 +64,7 @@ export const RegisterPage = () => {
       userName: formData.username,
       password: formData.password,
       email: formData.email,
-      pfp: "https://i.imgur.com/9LcmFac.jpeg",
+      pfp: "9LcmFac.jpeg",
       birthDate: new Date(formData.birthdate).toISOString(),
       phone: formData.phone,
     };
@@ -168,7 +171,7 @@ export const RegisterPage = () => {
                   }
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="phone"
-                  type="text"
+                  type="number"
                   placeholder="+54 11 1234567"
                   value={phone}
                 />
