@@ -57,6 +57,7 @@ export const RegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(initialState);
+    setErrors(validateRegisterForm(formData));
 
     const newUser = {
       name: formData.name,
@@ -69,9 +70,6 @@ export const RegisterPage = () => {
       phone: formData.phone,
     };
 
-    setErrors(validateRegisterForm(formData));
-    mutate(newUser);
-
     if (!isDateValid(formData.birthdate)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -79,6 +77,21 @@ export const RegisterPage = () => {
       }));
       return;
     }
+
+    if (
+      errors.username ||
+      errors.name ||
+      errors.lastname ||
+      errors.phone ||
+      errors.email ||
+      errors.password ||
+      errors.rPassword ||
+      errors.birthdate
+    ) {
+      return;
+    }
+
+    mutate(newUser);
   };
 
   return (

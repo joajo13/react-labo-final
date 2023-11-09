@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { createPost } from "../../services/posts";
 import { useMutation } from "react-query";
+import { toast } from "sonner";
 
 export const CreatePost = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,17 @@ export const CreatePost = () => {
   };
   const { state } = useContext(AuthContext);
   const { userInfo } = state;
+
+  const { mutate } = useMutation({
+    mutationKey: ["createPost"],
+    mutationFn: (post) => createPost(post),
+    onSuccess: () => {
+      toast.success("Posted successfully");
+    },
+    onError: () => {
+      toast.error("Posting failed");
+    },
+  });
 
   return (
     <>
@@ -34,12 +46,13 @@ export const CreatePost = () => {
         isOpen={isOpen}
         toggleModal={toggleModal}
         userInfo={userInfo}
+        mutate={mutate}
       />
     </>
   );
 };
 
-export const CreatePostModal = ({ isOpen, toggleModal, userInfo }) => {
+export const CreatePostModal = ({ isOpen, toggleModal, userInfo, mutate }) => {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -49,33 +62,22 @@ export const CreatePostModal = ({ isOpen, toggleModal, userInfo }) => {
     return null;
   }
 
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["createPost"],
-    mutationFn: (post) => createPost(post),
-    onSuccess: (data) => {
-      toast.success("Posted successfully");
-    },
-    onError: () => {
-      toast.error("Posting failed");
-    },
-  });
-
   const handlePost = () => {
     toggleModal();
     const { title, content } = formData;
     const post = {
       userId: userInfo.userId,
-      title,
-      content,
+      title: title.toString(),
+      mainContent: content.toString(),
       media: "none",
-      comunityId: 0,
+      communityId: 1,
     };
     mutate(post);
   };
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center backdrop-brightness-50">
-      <div className="bg-white p-4 rounded shadow-xl flex flex-col w-full lg:w-[60vw] mx-10 z-50">
+      <div className="bg-white p-4 rounded shadow-xl flex flex-col w-full lg:w-[60vw] mx-10 z-40">
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center">
             <img
@@ -111,7 +113,10 @@ export const CreatePostModal = ({ isOpen, toggleModal, userInfo }) => {
           }
           value={formData.content}
         />
-        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-2">
+        <button
+          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-2"
+          onClick={handlePost}
+        >
           Post
         </button>
       </div>

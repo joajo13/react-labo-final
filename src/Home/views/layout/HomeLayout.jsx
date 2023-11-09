@@ -15,7 +15,7 @@ export const HomeLayout = ({ children }) => {
       <div className="flex justify-between">
         <SideBar isOpen={isOpen} />
 
-        <div className="mx-2 w-full flex justify-center z-30">{children}</div>
+        <div className="mx-2 w-full flex justify-center z-20">{children}</div>
 
         <RightPanel />
       </div>

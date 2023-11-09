@@ -55,6 +55,12 @@ export const NavBar = ({ toggleMenu }) => {
         <button className="block lg:hidden mr-4" onClick={toggleMenu}>
           <AiOutlineMenu />
         </button>
+        <button
+          className="rounded bg-orange-500 hover:bg-orange-700 p-2 lg:hidden block"
+          onClick={handleLogout}
+        >
+          <IoMdOpen size={24} />
+        </button>
       </div>
     </nav>
   );

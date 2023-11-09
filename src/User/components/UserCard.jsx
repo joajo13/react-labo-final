@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiCake } from "react-icons/bi";
+import { AuthContext } from "../../context/AuthContext";
 
 export const UserCard = () => {
+  const { state } = useContext(AuthContext);
+  const { userInfo } = state;
+  const { name, lastName, userName, pfp, birthDate } = userInfo;
+
+  const date = new Date(birthDate);
+
+  // Get the day, month, and year
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // January is 0!
+  const year = date.getFullYear();
+
+  // Format the date
+  const formattedDate = `${day}/${month}/${year}`;
+
   return (
     <div className="flex justify-center ">
       <div className="mt-3 w-[45vw]">
         <div className="grid grid-cols-2 border rounded-lg bg-white p-6">
           <div className="flex flex-col justify-between h-full">
             <div className="">
-              <h1 className="text-2xl font-semibold">UserName</h1>
-              <h2 className="text-xl mt-3">Name and lastname</h2>
+              <h1 className="text-2xl font-semibold">{userName}</h1>
+              <h2 className="text-xl mt-3">
+                {name} {lastName}
+              </h2>
               <h2 className="text-lg mt-3 text-gray-800 ">Cake day</h2>
               <p className="text-gray-500 flex items-center">
                 <BiCake className="text-blue-600 mr-1" />
-                {"15/02/2003"}
+                {formattedDate}
               </p>
             </div>
             <div className="w-10/12">
@@ -30,7 +47,7 @@ export const UserCard = () => {
           <div>
             <img
               className="h-[300px] w-[300px] rounded-2xl"
-              src="https://i.imgur.com/9LcmFac.jpeg"
+              src={`public/${pfp ?? "default.png"}`}
               alt="Profile pic"
             />
           </div>
