@@ -12,7 +12,7 @@ export const NavBar = ({ toggleMenu }) => {
   const { handleLogout } = useContext(AuthContext);
 
   return (
-    <nav className="sticky top-0 bg-white">
+    <nav className="sticky top-0 bg-white z-40">
       <div className="z-10 flex items-center py-2 justify-between h-navbar">
         <Link to="/home" className="flex items-center ml-4">
           <FcReddit className="mr-2" size={32} />

@@ -19,3 +19,41 @@
     "birthDate": "2023-11-02T00:00:00.000Z",
     "phone": "3364183950"
 }
+'{
+    "userId": 3,
+    "name": "juan",
+    "lastName": "g",
+    "userName": "juang",
+    "email": "juan@gmail.com",
+    "pfp": "9LcmFac.jpeg",
+    "phone": "6546516",
+    "posts": [
+        {
+            "postId": 3,
+            "userId": 3,
+            "title": "Editado",
+            "mainContent": "asdasd",
+            "media": "asdasd",
+            "communityId": 1,
+            "createdAt": "2023-11-05T16:08:27"
+        },
+        {
+            "postId": 4,
+            "userId": 3,
+            "title": "Segundo post",
+            "mainContent": "Content post",
+            "media": "string",
+            "communityId": 1,
+            "createdAt": "2023-11-06T17:54:09"
+        },
+        {
+            "postId": 6,
+            "userId": 3,
+            "title": "Segundo post",
+            "mainContent": "Content post",
+            "media": "string",
+            "communityId": 1,
+            "createdAt": "2023-11-06T17:54:14"
+        }
+    ]
+}'

@@ -1,22 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HomeLayout } from "./layout/HomeLayout";
 import { CreatePost } from "../components/CreatePost";
 import { getPosts } from "../../services/posts";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Post } from "../components/Post";
 import { getUserById } from "../../services/users";
 import { AuthContext } from "../../context/AuthContext";
 
 export const HomePage = () => {
-  const { state } = useContext(AuthContext);
+  const userInfo = localStorage.getItem("userInfo");
+
+  const { handleAddInfo, state } = useContext(AuthContext);
   const { user } = state;
 
-  const { data: userFetch } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => getUserById(user.userID),
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["userInfo"],
+    mutationFn: (id) => getUserById(id),
+    onSuccess: (data) => {
+      handleAddInfo(data);
+    },
+    onError: () => {
+      toast.error("Failed to get user info");
+    },
   });
 
-  localStorage.setItem("userInfo", JSON.stringify(userFetch));
+  useEffect(() => {
+    if (!userInfo) {
+      mutate(user.userID);
+    }
+  }, []);
 
   const { data: posts } = useQuery({
     queryKey: ["posts"],
@@ -26,7 +38,7 @@ export const HomePage = () => {
   return (
     <HomeLayout>
       <main className="w-[90vw] lg:w-[60vw]">
-        <CreatePost userInfo={userFetch} />
+        <CreatePost />
         {posts?.map((p, i) => (
           <Post
             key={i}

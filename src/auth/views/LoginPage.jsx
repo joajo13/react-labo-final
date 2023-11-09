@@ -30,7 +30,6 @@ export const LoginPage = () => {
     onSuccess: (data) => {
       handleLogin(data);
       toast.success("Login successful");
-      console.log(data);
     },
     onError: () => {
       toast.error("Login failed");

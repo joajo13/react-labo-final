@@ -18,6 +18,19 @@ export const deletePost = async (id) => {
 
   return checkResponse(response);
 };
+
+export const createPost = async (data) => {
+  const response = await fetch(`${baseUrl}/posts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: authorizationHeader,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return checkResponse(response);
+};
 // export const getPostsByUserId = async (id) => {
 //   const response = await fetch(`${baseUrl}/posts/${id}`, {
 //     headers: {
