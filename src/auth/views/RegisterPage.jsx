@@ -34,6 +34,10 @@ export const RegisterPage = () => {
     },
   });
 
+  const isDateValid = (date) => {
+    const birthdate = new Date(date);
+    return !isNaN(birthdate.getTime());
+  };
   const [formData, setFormData] = useState(initialState);
 
   const {
@@ -64,6 +68,14 @@ export const RegisterPage = () => {
 
     setErrors(validateRegisterForm(formData));
     mutate(newUser);
+
+    if (!isDateValid(formData.birthdate)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        birthdate: "Fecha de nacimiento no válida",
+      }));
+      return;
+    }
   };
 
   return (
