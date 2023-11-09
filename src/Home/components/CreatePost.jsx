@@ -1,12 +1,17 @@
 import React, { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { createPost } from "../../services/posts";
+import { useMutation } from "react-query";
 
-export const CreatePost = ({ userInfo }) => {
+export const CreatePost = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+  const { state } = useContext(AuthContext);
+  const { userInfo } = state;
 
   return (
     <>
@@ -25,35 +30,90 @@ export const CreatePost = ({ userInfo }) => {
           Create post...
         </button>
       </div>
-      <CreatePostModal isOpen={isOpen} toggleModal={toggleModal} />
+      <CreatePostModal
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        userInfo={userInfo}
+      />
     </>
   );
 };
 
-export const CreatePostModal = ({ isOpen, toggleModal }) => {
+export const CreatePostModal = ({ isOpen, toggleModal, userInfo }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+  });
+
   if (!isOpen) {
     return null;
   }
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["createPost"],
+    mutationFn: (post) => createPost(post),
+    onSuccess: (data) => {
+      toast.success("Posted successfully");
+    },
+    onError: () => {
+      toast.error("Posting failed");
+    },
+  });
+
+  const handlePost = () => {
+    toggleModal();
+    const { title, content } = formData;
+    const post = {
+      userId: userInfo.userId,
+      title,
+      content,
+      media: "none",
+      comunityId: 0,
+    };
+    mutate(post);
+  };
+
   return (
     <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center backdrop-brightness-50">
-      <div className="bg-white p-4 rounded shadow-xl flex flex-col w-full lg:w-[60vw] mx-10 ">
-        <div>
-          <button onClick={toggleModal} className="self-end">
+      <div className="bg-white p-4 rounded shadow-xl flex flex-col w-full lg:w-[60vw] mx-10 z-50">
+        <div className="flex justify-between items-center">
+          <div className="flex justify-center items-center">
+            <img
+              src={`public/${userInfo.pfp}`}
+              alt="profilePic"
+              className="h-8 w-8 rounded-lg"
+            />
+            <span className="text-sm font-semibold ml-2">
+              @{userInfo.userName}
+            </span>
+          </div>
+          <button onClick={toggleModal}>
             <AiOutlineClose size={22} />
           </button>
-          <img src={`public/${""}`} alt="" />
         </div>
         <input
           type="text"
           name="title"
           id="title"
-          placeholder="Titulo"
+          placeholder="Title"
           className="rounded-sm border border-gray-300 p-2 mt-2"
+          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          value={formData.title}
         />
         <textarea
-          placeholder="Contenido del post"
+          placeholder="Abc..."
           className="rounded-sm border border-gray-300 p-2 mt-2"
+          name="content"
+          id="content"
+          rows={10}
+          onChange={(e) =>
+            setFormData({ ...formData, content: e.target.value })
+          }
+          value={formData.content}
         />
+        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-2">
+          Post
+        </button>
       </div>
     </div>
   );

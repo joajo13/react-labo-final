@@ -18,8 +18,6 @@ export const Post = ({ postContent, postOwner, postedAt, title, postId }) => {
     setIsOpen(!isOpen);
   };
 
-  const deletePost = () => {};
-
   return (
     <div>
       <div className="border bg-white rounded-lg overflow-hidden p-2 mt-2 w-full">
